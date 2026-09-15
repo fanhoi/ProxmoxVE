@@ -98,7 +98,8 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/fanhoi/ProxmoxVE/main/to
 
 ---
 
-## 📜 Лицензия
+## 📜 Лицензия и благодарности
 
-Проект распространяется под лицензией [MIT](LICENSE).
-Стилизованные бейджи сгенерированы сервисом [shieldcn](https://shieldcn.dev).
+- Проект распространяется под лицензией [MIT](LICENSE).
+- Скрипты основаны и адаптированы на базе оригинального проекта [Proxmox VE Helper-Scripts](https://github.com/community-scripts/ProxmoxVE).
+- Стилизованные статус-бейджи оформлены с помощью сервиса [shieldcn](https://shieldcn.dev).
