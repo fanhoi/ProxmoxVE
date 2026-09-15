@@ -1,45 +1,49 @@
-<!-- Главный README каталог скриптов Proxmox VE с бейджами shieldcn -->
-# 🧰 Proxmox VE — Скрипты и системные утилиты
+<div align="center">
 
-<p align="left">
-  <a href="https://proxmox.com"><img src="https://shieldcn.dev/badge/Proxmox_VE-v7%20%7C%20v8-E57000.svg?logo=proxmox&logoColor=white" alt="Proxmox VE" /></a>
-  <a href="https://www.gnu.org/software/bash/"><img src="https://shieldcn.dev/badge/Language-Bash-4EAA25.svg?logo=gnubash&logoColor=white" alt="Bash" /></a>
-  <a href="LICENSE"><img src="https://shieldcn.dev/badge/License-MIT-059669.svg" alt="License MIT" /></a>
-  <a href="https://github.com/fanhoi/ProxmoxVE"><img src="https://shieldcn.dev/badge/Status-Maintained-2563EB.svg?logo=lu:ShieldCheck&logoColor=white" alt="Status" /></a>
+# 🧰 Proxmox VE Helper Scripts & Tools
+
+<p>
+  <strong>Набор удобных, безопасных и русифицированных утилит для серверов Proxmox VE</strong>
 </p>
 
-Коллекция полезных, безопасных и русифицированных bash-скриптов для управления, диагностики и оптимизации серверов **Proxmox Virtual Environment (PVE)**.
+<p align="center">
+  <a href="https://proxmox.com"><img src="https://shieldcn.dev/badge/Proxmox_VE-v7_%7C_v8-E57000.svg?logo=proxmox&logoColor=white" alt="Proxmox VE" /></a>
+  <a href="https://www.gnu.org/software/bash/"><img src="https://shieldcn.dev/badge/Language-Bash-4EAA25.svg?logo=gnubash&logoColor=white" alt="Bash" /></a>
+  <a href="LICENSE"><img src="https://shieldcn.dev/badge/License-MIT-059669.svg" alt="License MIT" /></a>
+  <a href="https://github.com/fanhoi/ProxmoxVE"><img src="https://shieldcn.dev/badge/Status-Active-2563EB.svg?logo=lu:Activity&logoColor=white" alt="Status" /></a>
+</p>
+
+</div>
 
 ---
 
-## 📑 Каталог доступных скриптов
+## 🧭 Навигация по категориям
 
-| Категория | Скрипт | Описание | Запуск в 1 клик через консоль Proxmox VE |
-| :--- | :--- | :--- | :--- |
-| 💽 **Хранилище** | [`tools/disk-health.sh`](tools/disk-health.sh) | Диагностика состояния здоровья накопителей (NVMe, SSD, HDD), SMART-отчёт, температура, износ и запуск теста самодиагностики | `bash -c "$(curl -fsSL https://raw.githubusercontent.com/fanhoi/ProxmoxVE/main/tools/disk-health.sh)"` |
+- 💽 [**Хранилище и диски**](#-хранилище-и-диски)
+  - [Диагностика состояния накопителей (disk-health.sh)](#-проверка-состояния-накопителей-и-smart-disk-healthsh)
 
 ---
 
-## 🛠️ Описание инструментов
+## 💽 Хранилище и диски
 
-### 💽 1. Проверка состояния дисков и SMART-диагностика (`disk-health.sh`)
+### 🔍 Проверка состояния накопителей и SMART (`disk-health.sh`)
 
-Скрипт для быстрой оценки состояния, износа, температуры и SMART-метрик всех физических дисков хоста Proxmox VE.
+Скрипт для экспресс-диагностики физических накопителей (NVMe, SATA SSD, HDD). Формирует понятный русскоязычный отчёт по температуре, износу, ресурсу и критическим SMART-атрибутам, а также позволяет запустить безопасный фоновый тест самодиагностики.
 
-#### 🚀 Быстрый запуск:
+#### ⚡ Команда для запуска (вставьте в консоль Proxmox VE):
+
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/fanhoi/ProxmoxVE/main/tools/disk-health.sh)"
 ```
 
-#### ✨ Ключевые возможности:
-- **Автопоиск накопителей**: находит физические диски, исключая loop, zram и виртуальные device-mapper разделы.
-- **Поддержка NVMe**: температура, доступный резерв, процент использованного ресурса, объем записанных данных, небезопасные отключения, ошибки целостности данных.
-- **Поддержка SATA SSD / HDD**: температура, время наработки (Power On Hours), индикатор износа (Wear Leveling / Wearout), переназначенные и нестабильные секторы (Reallocated/Pending Sectors), ошибки UDMA CRC.
-- **Интерактивный тест самодиагностики**: через псевдографическое меню `whiptail` можно в один клик запустить безопасный фоновый короткий тест (**SHORT SMART Self-Test**) на выбранном накопителе.
-- **Автоустановка утилит**: при необходимости сам установит `smartmontools` и `nvme-cli`.
+#### ✨ Что проверяет скрипт:
+- **NVMe накопители**: температура, доступный резерв (Available Spare), процент износа (Percentage Used), объём записанных данных, время наработки, небезопасные отключения, ошибки целостности данных.
+- **SATA/SAS SSD и HDD**: температура, часы наработки, индикатор износа (Wear Leveling/Wearout), переназначенные секторы (Reallocated), нестабильные секторы (Pending), неисправимые ошибки (Offline Uncorrectable), ошибки передачи (UDMA CRC).
+- **Самодиагностика**: запуск короткого фонового теста (**SHORT SMART Self-Test**) через удобное интерактивное меню.
+- **Автоматика**: при отсутствии `smartmontools` или `nvme-cli` скрипт сам аккуратно установит недостающие пакеты.
 
 <details>
-<summary><b>📊 Пример вывода disk-health.sh</b></summary>
+<summary><b>📋 Пример отчёта в терминале</b></summary>
 
 ```text
 ======================================================
@@ -68,7 +72,9 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/fanhoi/ProxmoxVE/main/to
 
 </details>
 
-## 📄 Лицензия
+---
+
+## 📜 Лицензия
 
 Проект распространяется под лицензией [MIT](LICENSE).
-Бейджи оформления созданы с помощью [shieldcn](https://shieldcn.dev).
+Стилизованные бейджи сгенерированы сервисом [shieldcn](https://shieldcn.dev).
