@@ -1,7 +1,9 @@
-# Игнорировать все файлы по умолчанию
-*
-
-# Разрешенные файлы для репозитория
-!README.md
-!disk-health.sh
-!.gitignore
+# Системные и служебные файлы
+.DS_Store
+*.tmp
+*.log
+CHANGELOG.md
+tests/
+test_disk_health.sh
+.idea/
+.vscode/
