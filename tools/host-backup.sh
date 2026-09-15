@@ -13,8 +13,6 @@ function header_info {
  / _  / _ \(_-</ __/ / _  / _ `/ __/  '_/ // / _ \
 /_//_/\___/___/\__/ /____/\_,_/\__/_/\_\\_,_/ .__/
                                            /_/
-
- Резервное копирование файлов и конфигураций хоста Proxmox VE
 EOF
 }
 
@@ -55,8 +53,8 @@ function perform_backup {
   # Allow the user to select directories
   local HOST_BACKUP
   while [ -z "${HOST_BACKUP:+x}" ]; do
-    HOST_BACKUP=$(whiptail --backtitle "Резервное копирование хоста Proxmox VE" --title "Работа в директории ${DIR} " --checklist \
-      "\nВыберите файлы/директории для бэкапа:\n" 16 78 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || return
+    HOST_BACKUP=$(whiptail --backtitle "Proxmox VE Host Backup" --title "Работа в директории ${DIR} " --checklist \
+      "\nВыберите файлы/директории для бэкапа:\n" 16 $(((${#DIRNAME} + 2) + 88)) 6 "${CTID_MENU[@]}" 3>&1 1>&2 2>&3) || return
 
     for selected_dir in ${HOST_BACKUP//\"/}; do
       if [[ "$selected_dir" == "ALL" ]]; then
@@ -84,7 +82,7 @@ function perform_backup {
 
 # Main script execution loop
 while true; do
-  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Резервное копирование хоста Proxmox VE" --yesno "Будут созданы резервные копии выбранных файлов и директорий в указанной папке. Продолжить?" 10 88); then
+  if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "Proxmox VE Host Backup" --yesno "Будут созданы резервные копии выбранных файлов и директорий в указанной папке. Продолжить?" 10 88); then
     perform_backup
   else
     break
