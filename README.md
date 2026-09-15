@@ -40,7 +40,7 @@
 Подключитесь к консоли хоста Proxmox VE (через SSH или Web Shell) и выполните команду:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/disk-health.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/fanhoi/ProxmoxVE/main/disk-health.sh)"
 ```
 
 ---
